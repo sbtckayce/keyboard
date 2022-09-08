@@ -1,0 +1,98 @@
+<div class="container cart-container">
+  <h3>Your Cart</h3>
+  <div class="cart-desc" *ngIf="items.length != 0">
+    <div class="cart-left">
+      <div class="cart-item" *ngFor="let item of items; let i = index">
+        <img [src]="item.imgs[0]" alt="" class="cart-img" />
+        <div class="cart-title">
+          <h6 class="cart-name">{{ item.name }}</h6>
+          <a class="cart-remove" (click)="onDelete(i)">
+            <i class="fa-solid fa-trash"></i> Remove
+          </a>
+        </div>
+        <div class="cart-amount">
+          <div class="cart-qty">
+            <button
+              class="cart-qty-minus"
+              type="button"
+              (click)="incrementQuantity(sellQuantityInput, i)"
+              [disabled]="item.sellQuantity == 1"
+              [style.backgroundColor]="item.sellQuantity == 1 ? '#000' : '#1E6DD8'"
+              
+            >
+              <i class="fa-solid fa-minus"></i>
+            </button>
+            <input
+              class="change-quantity"
+              type="text"
+              min="0"
+              max="10000"
+              step="1"
+              [value]="item.sellQuantity"
+              #sellQuantityInput
+            />
+            <button
+              class="cart-qty-plus"
+              type="button"
+              (click)="decrementQuantity(sellQuantityInput, i)"
+            >
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+          <div class="cart-price">
+            <p class="cart-price__old">
+              OldPrice : {{ item.oldPrice | currency: "VND":"symbol":"":"fr" }}
+            </p>
+            <p class="cart-price__new">
+              NewPrice : {{ item.newPrice | currency: "VND":"symbol":"":"fr" }}
+            </p>
+            <p class="cart-price__total">
+              Total :
+              {{
+                item.sellQuantity * item.newPrice
+                  | currency: "VND":"symbol":"":"fr"
+              }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-primary" routerLink="/products">Shop Now</button>
+    </div>
+    <div class="cart-right">
+      <p class="cart-summary">Summary</p>
+      <div class="cart-prices">
+        <p>Products</p>
+        <p>{{ total | currency: "VND":"symbol":"":"fr" }}</p>
+      </div>
+      <div class="cart-prices">
+        <p>Shipping</p>
+        <p>Gratis</p>
+      </div>
+      <div class="cart-total">
+        <p>Total amount</p>
+        <p>{{ total | currency: "VND":"symbol":"":"fr" }}</p>
+      </div>
+      <div *ngIf="user!=null">
+        <button type="button" class="btn btn-primary btn-rounded w-100">
+          <a routerLink="/checkout" style="cursor: pointer;color:#fff;text-decoration: none;display: block;">Checkout</a>
+        </button>
+        
+     
+      </div>
+      <div *ngIf="user==null" >
+       
+        <button class="btn btn-primary btn-rounded w-100" routerLink="/login">Please Login to Order</button>
+      </div>
+    </div>
+    
+  </div>
+  <div class="cart-null" *ngIf="items.length == 0">
+    <img
+      src="https://i0.wp.com/www.huratips.com/wp-content/uploads/2019/04/empty-cart.png?fit=603%2C288&ssl=1"
+      alt=""
+    />
+    <h4>Your Cart is Empty</h4>
+    <h6>Add item to it now</h6>
+    <button class="btn btn-primary" routerLink="/products">Shop Now</button>
+  </div>
+</div>

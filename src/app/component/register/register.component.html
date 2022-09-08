@@ -1,0 +1,46 @@
+<div class="main">
+    <div class="login">
+       <form  class="form-register"  [formGroup]="formData" >
+        <div class="name">
+            <label >Name</label>
+             <div class="user-input">
+                 <i class="fas fa-user"></i>
+                 <input type="text" placeholder="Nhập tên của bạn" formControlName="name">
+             </div>
+        </div>
+        <div class="email">
+            <label >Email</label>
+             <div class="user-input">
+                 <i class="fas fa-user"></i>
+                 <input type="email" placeholder="Nhập email của bạn" formControlName="email">
+             </div>
+        </div>
+          
+           <div class="pass">
+            <label >Password</label>
+            <div class="user-input">
+                <i class="fas fa-lock"></i>
+                <input type="password" placeholder="Nhập mật khẩu của bạn" formControlName="password">
+                <i class="hideeye fas fa-eye-slash" style="background-color: transparent;"></i>
+            </div>
+           </div>
+           <div class="pass1">
+            <label >Repeat Password</label>
+            <div class="user-input">
+                <i class="fas fa-lock"></i>
+                <input type="password" placeholder="Nhập lại mật khẩu của bạn" formControlName="passwordConfirm">
+                <i class="hideeye fas fa-eye-slash" style="background-color: transparent;"></i>
+            </div>
+           </div>
+           <div class="term" style="color:#DE3D47">
+            <input type="checkbox">I a gree to the Term of User
+        </div>
+           <div class="button">
+               <input type="submit" value="REGISTER" (click)="register()">
+           </div>
+           <div class="question">
+               Nếu đã có tài khoản ? <a  routerLink="/login" >Log In</a>
+           </div>
+       </form>
+    </div>
+</div>

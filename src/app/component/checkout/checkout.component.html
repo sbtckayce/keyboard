@@ -1,0 +1,73 @@
+<div class="container cart-container">
+    <h3>Your Order</h3>
+    <div class="cart-desc">
+      <div class="cart-left">
+        <div class="cart-item" *ngFor="let item of items; let i = index">
+          <img [src]="item.imgs[0]" alt="" class="cart-img" />
+          <div class="cart-title">
+            <h6 class="cart-name">{{ item.name }}</h6>
+            <div class="cart-qty" 
+            >
+             Quantity : {{item.sellQuantity}}
+            </div>
+            <div class="cart-price">
+              <p class="cart-price__old">
+                OldPrice : {{ item.oldPrice | currency: "VND":"symbol":"":"fr" }}
+              </p>
+              <p class="cart-price__new">
+                NewPrice : {{ item.newPrice | currency: "VND":"symbol":"":"fr" }}
+              </p>
+              <p class="cart-price__total">
+                Total :
+                {{
+                  item.sellQuantity * item.newPrice
+                    | currency: "VND":"symbol":"":"fr"
+                }}
+              </p>
+            </div>
+          </div>
+         
+        </div>
+        <button class="btn btn-primary" routerLink="/cart">Cart Now</button>
+      </div>
+      <div class="cart-right">
+        <p class="cart-summary">Summary</p>
+        <div class="cart-prices">
+          <p>Products</p>
+          <p>{{ total | currency: "VND":"symbol":"":"fr" }}</p>
+        </div>
+        <div class="cart-prices">
+          <p>Shipping</p>
+          <p>Gratis</p>
+        </div>
+        <div class="cart-total">
+          <p>Total amount</p>
+          <p>{{ total | currency: "VND":"symbol":"":"fr" }}</p>
+        </div>
+        <div  *ngIf="user!=null">
+         
+          <google-pay-button
+          environment="TEST"
+          buttonType="buy"
+          buttonColor="black"
+          buttonSizeMode="fill"
+          style="width: 100%;"
+          [paymentRequest]="paymentRequest"
+          (loadpaymentdata)="onLoadPaymentData($event)"
+          (error)="onError($event)"
+          [paymentAuthorizedCallback]="onPaymentDataAuthorized"
+         
+        >
+        </google-pay-button>
+       
+        </div>
+        <div *ngIf="user==null" >
+       
+          <button class="btn btn-primary btn-rounded w-100" routerLink="/login">Please Login to Order</button>
+        </div>
+      </div>
+      
+    </div>
+  
+  </div>
+  

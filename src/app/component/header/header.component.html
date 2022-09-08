@@ -1,0 +1,45 @@
+<header class="header">
+    <!-- <img [src]="logo" alt="" class="header-logo"/> -->
+  <div class="container header-container">
+    <div class="header-home">
+        <a routerLink="">Keyboard <i class="fa-solid fa-code"></i></a>
+      </div>
+      <div class="header-search">
+        <input type="text" [(ngModel)]="searchTerm" (keyup)="search($event)">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+      <div class="header-cart">
+        
+        <a routerLink="/cart">
+          <i class="fa-solid fa-cart-shopping"></i>
+          Cart
+          <span>{{ itemInCart }}</span>
+        </a>
+      </div>
+      <div class="header-auth" *ngIf="!user">
+       
+        
+        <a routerLink="/login">
+          <i class="fa-solid fa-user"></i>
+          Login</a>
+      </div>
+      <div class="header-auth" *ngIf="user">
+       
+        <a href="#" *ngIf="user.email != 'kientran@gmail.com'">
+          <i class="fa-solid fa-user"></i>
+          {{ user.email }}</a>
+        <a routerLink="/admin"*ngIf="user.email == 'kientran@gmail.com'">
+          <i class="fa-solid fa-user"></i>
+          {{ user.email }}</a>
+      </div>
+      <div class="header-auth" *ngIf="user">
+       
+        
+        <a (click)="signOut()">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          Logout</a>
+      </div>
+  </div>
+    
+  </header>
+  

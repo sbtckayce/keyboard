@@ -1,0 +1,29 @@
+<div class="main">
+    <div class="login">
+       <form action="" class="form-login" [formGroup]="formData">
+           <div class="user">
+               <label >Email</label>
+                <div class="user-input">
+                    <i class="fas fa-user"></i>
+                    <input type="email" placeholder="tester@gmail.com" formControlName="email" required>
+                </div>
+           </div>
+           <div class="pass">
+            <label >Password</label>
+            <div class="user-input">
+                <i class="fas fa-lock"></i>
+                <input type="password" placeholder="123456" formControlName="password" pattern="[0-9]" required
+                title="Password contains only numbers">
+                <i class="hideeye fas fa-eye-slash" style="background-color: transparent;"></i>
+            </div>
+           </div>
+          
+           <div class="button">
+               <input type="submit" value="SIGN IN" (click)="onSignIn()">
+           </div>
+           <div class="question">
+               Nếu bạn chưa tài khoản ? <a routerLink="/register">Register</a>
+           </div>
+       </form>
+    </div>
+</div>

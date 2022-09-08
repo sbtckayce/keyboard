@@ -1,0 +1,60 @@
+<div class="category">     
+    <ul>
+        <li>
+            <a (click)="filterProduct('')">
+                
+                <i class="fa-solid fa-bars"></i>
+                All</a></li>
+        <li><a (click)="filterProduct('Filco')">Filco</a></li>
+        <li><a (click)="filterProduct('Glorious')">Glorious</a></li>
+        <li><a (click)="filterProduct('Realforce')">Realforce</a></li>
+        <li><a (click)="filterProduct('Razer')">Razer</a></li>
+        <li><a (click)="filterProduct('Corsair')">Corsair</a></li>
+        <li><a (click)="filterProduct('Keychron')">Keychron</a></li>
+        <li><a (click)="filterProduct('Logitech')">Logitech</a></li>
+    </ul>
+    <a  class="category-menu__bar" (click) = toggleActive()>
+    <i class="fa-solid fa-bars"></i>
+    <div class="category-menu__list" [hidden]="!isShow">
+        <a (click)="filterProduct('')">All</a>
+        <a (click)="filterProduct('Filco')">Filco</a>
+        <a (click)="filterProduct('Glorious')">Glorious</a>
+        <a (click)="filterProduct('Realforce')">Realforce</a>
+        <a (click)="filterProduct('Razer')">Razer</a>
+        <a (click)="filterProduct('Corsair')">Corsair</a>
+        <a (click)="filterProduct('Keychron')">Keychron</a>
+        <a (click)="filterProduct('Logitech')">Logitech</a>
+    </div>
+
+</a>
+</div>
+<button class="btn btn-primary text-center w-100" type="button" disabled *ngIf="loading">
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Loading...
+  </button>
+<div class="container products-container"*ngIf="!loading">
+    <div class="products-list">
+        <div class="products-item" *ngFor="let product of filterCategories | filter : searchKey : 'name'| paginate:{itemsPerPage: 12 , currentPage:p}" 
+        data-aos="zoom-in"data-aos-easing="linear"
+        data-aos-duration="500"
+        >
+            <a [routerLink]="['/detail',product.name]" class="products-name">
+                <img [src]="product.imgs[0]" alt="" class="products-img">
+           
+                <p>{{ product.name }}</p>
+            </a>
+            <p class="products-category">{{ product.category }}</p>
+            <p class="products-price__old">{{product.oldPrice | currency : 'VND' : 'symbol':'':'fr'}}</p>
+            <p class="products-price__new"><i class="fa-brands fa-shopify"></i> &nbsp;{{ product.newPrice | currency : 'VND' : 'symbol':'':'fr' }}</p>
+        </div>
+       
+    </div>
+
+</div>
+<pagination-controls (pageChange)="p=$event" style=" display: block;
+margin: 20px auto;
+width: fit-content;
+padding-left: 0;"></pagination-controls>
+
+
+

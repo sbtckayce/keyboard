@@ -1,0 +1,38 @@
+
+<div class="container detail-container" *ngIf="product">
+  <div class="detail-left">
+    
+    <img [src]="product.imgs[displayImage]" alt="" data-aos="zoom-in"data-aos-easing="linear"
+    data-aos-duration="300" class="detail-img__main" />
+    <div class="detail-img__list">
+      <img
+        [src]="image"
+        *ngFor="let image of product.imgs; let i = index"
+        (mouseenter)="displayImage = i"
+        alt=""
+      />
+    </div>
+  </div>
+  <div class="detail-right" *ngIf="product">
+    <p class="detail-name">
+      {{ product.name }}
+    </p>
+    <p class="detail-desc">
+      {{ product.desc }}
+    </p>
+    <p class="detail-category">Category : {{ product.category }}</p>
+    <p class="detail-price__old">
+      OldPrice : {{ product.oldPrice | currency: "VND":"symbol":"":"fr" }}
+    </p>
+    <p class="detail-price__new">
+      NewPrice : {{ product.newPrice | currency: "VND":"symbol":"":"fr" }}
+    </p>
+    <button
+      type="button"
+      class="btn btn-primary btn-rounded me-2 btn-add-cart"
+      (click)="addToCart(product)"
+    >
+      <i class="fas fa-cart-plus me-2"></i>Add to cart
+    </button>
+  </div>
+</div>

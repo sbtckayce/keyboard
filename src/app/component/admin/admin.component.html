@@ -1,0 +1,146 @@
+<ng-container *ngIf="user">
+  
+
+
+<nav class="navbar"style="margin: 20px auto;width: 1200px;">
+  <button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-left: auto;margin-top:40px; margin-bottom:20px"
+  
+  (click)="onAdd()"
+  >Add
+    Product</button>
+      <input type="text" name="lastName" placeholder="Enter  Name" class="form-control" style="width: 100%;"
+      [(ngModel)]="name"
+      (ngModelChange)="search()"
+      
+      >
+   
+</nav>
+
+<table class="table table-bordered table-striped" style="margin: 20px auto; width:1200px">
+    <thead style="border-width: unset;">
+      <tr style="font-size: 15px;" >
+        <td  scope="col" style="width:5% ; cursor: pointer;" (click) ="sort('id')">ID &nbsp; <i class="fa fa-sort"></i></td>
+        <td   scope="col"style="width:10% ; cursor: pointer;" (click) ="sort('name')">Product Name &nbsp;<i class="fa fa-sort"></i></td>
+        <td  scope="col"style="width:5%">Category</td>
+        <td   scope="col"style="width:5%">Quantity</td>
+        <td   scope="col"style="width:5%">Old Price</td>
+        <td scope="col"style="width:5%">New Price</td>
+      
+        <td scope="col"style="width:10%">Img</td>
+       
+      </tr>
+    </thead>
+  
+    <tbody  data-aos="zoom-out"data-aos-easing="linear"
+    data-aos-duration="700">
+     <tr *ngFor="let product of products | orderBy : key : reverse  | paginate : { itemsPerPage: 5 , currentPage: p }">
+        <td style="width:5% ;vertical-align: middle;">{{ product.id }}</td>
+        <td style="width:10%;vertical-align: middle;">{{ product.name }}</td>
+        <td  style="width:5%;vertical-align: middle;">{{ product.category }}</td>
+        <td style="width:5%;vertical-align: middle;">{{ product.quantity }}</td>
+        <td style="width:5%;vertical-align: middle;" >{{ product.oldPrice }}</td>
+        <td style="width:5%;vertical-align: middle;">{{ product.newPrice }}</td>
+       
+        <td style="width:10%"> 
+            <img [src]="product.imgs[0]" alt="" style="width: 100%;height:100%;object-fit: cover;">
+
+        </td>
+        <td style="width:10%;vertical-align: middle; text-align: center;">
+          <button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor: pointer; color:#fff;margin : 0 5px;"
+           (click)="onEdit(product)"
+          >
+            <i class="fa-solid fa-pen" ></i>
+          </button>
+         
+          <button  type="button" class="btn btn-danger" style="cursor: pointer; color:#fff; margin : 0 5px;"
+          (click)="removeProduct(product)">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+          
+        </td>
+      </tr>
+  
+    </tbody>
+  
+  </table>
+  <pagination-controls (pageChange)="p=$event" style=" display: block;
+  margin: 20px auto;
+  width: fit-content;
+  padding-left: 0;"></pagination-controls>
+  
+  
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" style="margin-top:70px">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Product Detail</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="form">
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label" >Name</label>
+              <input type="text"  class="form-control"  formControlName="name">
+            </div>
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Category</label>
+              
+              <input type="text" formControlName="category" class="form-control" >
+            </div>
+            
+           
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Old Price</label>
+              <input type="number" class="form-control"  formControlName="oldPrice">
+            </div>
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">new Price</label>
+              <input type="number"  class="form-control"  formControlName="newPrice">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Desc</label>
+                <input type="text" formControlName="desc" class="form-control" >
+               
+              </div>
+              
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label" style="display:block">Img</label>
+               
+                <img *ngFor="let url of urls" [src]="url"  alt="" style="width : 200px; height: 200px ; text-align: center" >
+                <input type="file" class="form-control"  (change)="  getMultipleImage($event)" multiple
+                >
+                
+                <button  type="button" class="btn btn-danger" style="cursor: pointer; color:#fff; margin : 10px 5px;"
+                (click)="deleteImg()"
+                >
+                Remove All Img<i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Quantity</label>
+                <input type="text" formControlName="quantity" class="form-control" >
+              
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Sell Quantity</label>
+                <input type="text" formControlName="sellQuantity" class="form-control" >
+              
+              </div>
+          </form>
+  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel">Close</button>
+          <button type="button" class="btn btn-primary" *ngIf="isAdd" [disabled]="!form.valid" (click)="addProduct()" >Add</button>
+          <button type="button" class="btn btn-primary" *ngIf="isEdit" [disabled]="!form.valid" (click)="updateProduct()"  >Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ng-container>
+<ng-container *ngIf="!user">
+ <h3 style="color:red ; margin-top:200px; margin-left: auto;margin-right:auto;width: fit-content;"> ban khong co quyen truy cap</h3>
+</ng-container>
